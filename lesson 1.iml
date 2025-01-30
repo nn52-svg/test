@@ -1,11 +1,55 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<module type="JAVA_MODULE" version="4">
-  <component name="NewModuleRootManager" inherit-compiler-output="true">
-    <exclude-output />
-    <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
-    </content>
-    <orderEntry type="inheritedJdk" />
-    <orderEntry type="sourceFolder" forTests="false" />
-  </component>
-</module>
+class Main {
+    Main() {
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Введите арифметическое выражение:");
+        String input = scanner.nextLine();
+
+        try {
+            String result = calc(input);
+            System.out.println("Результат: " + result);
+        } catch (Exception e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
+
+    }
+
+    public static String calc(String input) throws Exception {
+        input = input.replaceAll("\\s+", "");
+        if (!input.matches("\\d+[+\\-*/]\\d+")) {
+            throw new Exception("Некорректный формат выражения");
+        } else {
+            String[] parts = input.split("[+\\-*/]");
+            int a = Integer.parseInt(parts[0]);
+            int b = Integer.parseInt(parts[1]);
+            char operator = input.charAt(parts[0].length());
+            if (a >= 1 && a <= 10 && b >= 1 && b <= 10) {
+                int var10000;
+                switch (operator) {
+                    case '*':
+                        var10000 = a * b;
+                        break;
+                    case '+':
+                        var10000 = a + b;
+                        break;
+                    case ',':
+                    case '.':
+                    default:
+                        throw new Exception("Неподдерживаемая операция");
+                    case '-':
+                        var10000 = a - b;
+                        break;
+                    case '/':
+                        var10000 = a / b;
+                }
+
+                int result = var10000;
+                return String.valueOf(result);
+            } else {
+                throw new Exception("Числа должны быть от 1 до 10 включительно");
+            }
+        }
+    }
+}
